@@ -24,4 +24,4 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
   -
 
-[1.1.0]: https://github.com/zalando-incubator/zelt/compare/aca82a82608a931fe9d34b0271102feac0ee7e28...v1.1.0
+[1.1.0]: https://github.com/zalando-incubator/zelt/compare/aca82a82608a931fe9d34b0271102feac0ee7e28...022588a3c51b3b313bf1a9df03db96a5a7a3e9bb
