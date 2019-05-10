@@ -1,0 +1,18 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: zelt-ingress
+  namespace: zelt
+  labels:
+    application: zelt-locust
+spec:
+  selector:
+    application: zelt-locust
+    role: controller
+  rules:
+  - host: zelt.minikube
+    http:
+      paths:
+      - backend:
+          serviceName: zelt-service
+          servicePort: 8089

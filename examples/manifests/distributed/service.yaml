@@ -1,0 +1,19 @@
+# Locust Service
+apiVersion: v1
+kind: Service
+metadata:
+  name: zelt-service
+  namespace: zelt
+  labels:
+    application: zelt-locust
+spec:
+  selector:
+    application: zelt-locust
+    role: controller
+  ports:
+    - port: 8089
+      name: web
+    - port: 5557
+      name: controller-worker-1
+    - port: 5558
+      name: controller-worker-2

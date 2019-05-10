@@ -1,0 +1,6 @@
+locustfile: examples/locustfile/locustfile.py
+har-files:
+  - examples/har/example.com.har
+manifests: examples/manifests/distributed
+worker-pods: 2
+storage: ConfigMap

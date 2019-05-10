@@ -1,0 +1,41 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: zelt-locust-controller
+  namespace: zelt
+  labels:
+    application: zelt-locust
+    role: controller
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      application: zelt-locust
+      role: controller
+  template:
+    metadata:
+      labels:
+        application: zelt-locust
+        role: controller
+    spec:
+      containers:
+        - name: locust
+          image: registry.opensource.zalan.do/automata/locust
+          resources:
+            requests:
+              cpu: 0.5
+              memory: 100Mi
+          ports:
+            - containerPort: 8089
+            - containerPort: 5557
+            - containerPort: 5558
+          # Note that the "master" terminology here is from Locust.
+          # We refer to this as "controller".
+          command: ["locust", "--host", "unused", "--master", "-f", "/app/locustfile.py"]
+          volumeMounts:
+            - name: config-volume
+              mountPath: /app
+      volumes:
+        - name: config-volume
+          configMap:
+            name: zelt-locustfile
