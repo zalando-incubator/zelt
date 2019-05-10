@@ -38,9 +38,11 @@ Usage:
     zelt delete --config <file>
                 [--logging <level>]
     zelt --help
+    zelt --version
 
 Options:
     -h, --help                               Show this screen.
+    -v, --version                            Show version.
     -p, --transformer-plugins=<plugin-name>  Module name of Transformer plugin (repeatable).
     -m, --manifests=<manifests>              Path to manifest files.
     -w, --worker-pods=<pods>                 Number of worker pods to deploy [default: 1].
@@ -57,6 +59,7 @@ Options:
 
 import logging
 import os
+import pkg_resources
 import sys
 import yaml
 from docopt import docopt
@@ -96,7 +99,7 @@ def cli():
     # See https://github.com/yaml/pyyaml/wiki/PyYAML-yaml.load(input)-Deprecation
     yaml.warnings({"YAMLLoadWarning": False})
 
-    config = _load_config(docopt(__doc__))
+    config = _load_config(docopt(__doc__, version=_version()))
 
     logging.basicConfig(level=config.logging)
 
@@ -116,6 +119,10 @@ def cli():
 
     if config.delete:
         _delete(config)
+
+
+def _version() -> str:
+    return pkg_resources.get_distribution("zelt").version
 
 
 def _deploy(config: Config) -> None:
