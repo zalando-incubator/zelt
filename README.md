@@ -9,14 +9,13 @@ Use it in conjunction with [Transformer][] to run large-scale end-to-end load te
 ### Prerequistes
 
 - [Python 3.6+][]
-- [Poetry][]
 
 ### Installation
 
-Install using Make:
+Install using pip:
 
 ```bash
-make install
+pip install zelt
 ```
 
 ### Usage
@@ -30,7 +29,7 @@ Example HAR files, locustfile, and manifests are included in the `examples/` dir
 Zelt can deploy Locust with a locustfile to a cluster:
 
 ```bash
-poetry run zelt from-locustfile PATH_TO_LOCUSTFILE --manifests PATH_TO_MANIFESTS
+zelt from-locustfile PATH_TO_LOCUSTFILE --manifests PATH_TO_MANIFESTS
 ```
 
 #### HAR files(s) as input
@@ -38,7 +37,7 @@ poetry run zelt from-locustfile PATH_TO_LOCUSTFILE --manifests PATH_TO_MANIFESTS
 Zelt can transform HAR file(s) into a locustfile and deploy it along with Locust to a cluster:
 
 ```bash
-poetry run zelt from-har PATH_TO_HAR_FILES --manifests PATH_TO_MANIFESTS
+zelt from-har PATH_TO_HAR_FILES --manifests PATH_TO_MANIFESTS
 ```
 
 **N.B** This requires [Transformer][] to be installed. For more information about Transformer, please refer to its [documentation][].
@@ -48,7 +47,7 @@ poetry run zelt from-har PATH_TO_HAR_FILES --manifests PATH_TO_MANIFESTS
 Zelt can rescale the number of [workers][] in a deployment it has made to a cluster:
 
 ```bash
-poetry run zelt rescale NUMBER_OF_WORKERS --manifests PATH_TO_MANIFESTS
+zelt rescale NUMBER_OF_WORKERS --manifests PATH_TO_MANIFESTS
 ```
 
 #### Delete a deployment
@@ -56,7 +55,7 @@ poetry run zelt rescale NUMBER_OF_WORKERS --manifests PATH_TO_MANIFESTS
 Zelt can delete deployments it has made from a cluster:
 
 ```bash
-poetry run zelt delete --manifests PATH_TO_MANIFESTS
+zelt delete --manifests PATH_TO_MANIFESTS
 ```
 
 #### Run Locust locally
@@ -64,7 +63,7 @@ poetry run zelt delete --manifests PATH_TO_MANIFESTS
 Zelt can also run Locust locally by providing the `--local/-l` flag to either the `from-har` or `from-locustfile` command e.g.:
 
 ```bash
-poetry run zelt from-locustfile PATH_TO_LOCUSTFILE --local
+zelt from-locustfile PATH_TO_LOCUSTFILE --local
 ```
 
 #### Use S3 for locustfile storage
@@ -86,7 +85,7 @@ To do so, add the following parameters to your Zelt command:
 An alternative to specifying Zelt's options on the command-line is to use a configuration file, for example:
 
 ```bash
-poetry run zelt from-har --config examples/config/config.yaml
+zelt from-har --config examples/config/config.yaml
 ```
 
 **N.B.** The configuration file's keys are the same as the command-line option names but without the double dash (`--`).
@@ -119,7 +118,6 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 [Kubernetes]: https://kubernetes.io/
 [Transformer]: https://github.com/zalando-incubator/transformer
 [Python 3.6+]: https://www.python.org/downloads/
-[Poetry]: https://poetry.eustace.io/docs/#installation
 [using the correct cluster]: https://kubernetes.io/docs/reference/kubectl/cheatsheet/#kubectl-context-and-configuration
 [documentation]: https://transformer.readthedocs.io/
 [workers]: https://docs.locust.io/en/stable/running-locust-distributed.html

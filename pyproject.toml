@@ -1,13 +1,24 @@
 [tool.poetry]
 name = "zelt"
-version = "1.1.0"
+version = "1.2.3"
 description = "Zalando end-to-end load tester"
 authors = [
-    "Thibaut Le Page <thibaut.le.page@zalando.de>",
     "Brian Maher <brian.maher@zalando.de>",
-    "Oliwia Zaremba <oliwia.zaremba@zalando.de>"
+    "Oliwia Zaremba <oliwia.zaremba@zalando.de>",
+    "Thibaut Le Page <thibaut.le.page@zalando.de>"
 ]
 license = "MIT"
+readme = "README.md"
+homepage = "https://github.com/zalando-incubator/zelt"
+repository = "https://github.com/zalando-incubator/zelt"
+keywords = ["load testing", "locust", "kubernetes"]
+classifiers=[
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Topic :: Software Development :: Testing :: Traffic Generation",
+    "Topic :: Internet :: WWW/HTTP",
+]
+packages = [{include = "zelt"}, { include = "main.py"}]
 
 [tool.poetry.dependencies]
 python = "^3.6"
@@ -18,6 +29,7 @@ boto3 = "^1.9"
 greenlet = "^0.4.15"
 tenacity = "^5.0"
 docopt = "^0.6.2"
+pyyaml = "^5.1"
 
 [tool.poetry.dev-dependencies]
 pytest-cov = "^2.6"
@@ -25,9 +37,9 @@ pytest = "^4.3"
 pylint = "^2.3"
 pytest-watch = "^4.2"
 
+[tool.poetry.scripts]
+zelt = "main:cli"
+
 [build-system]
 requires = ["poetry>=0.12"]
 build-backend = "poetry.masonry.api"
-
-[tool.poetry.scripts]
-zelt = "main:cli"
