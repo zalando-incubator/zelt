@@ -1,0 +1,40 @@
+dist: xenial
+language: python
+python:
+- '3.6'
+- '3.7'
+install:
+- pip install --upgrade pip==18.1
+- pip install poetry
+- make install
+script:
+- make test
+- make lint
+before_deploy:
+- poetry config http-basic.pypi bmaher "$PYPI_PASSWORD"
+- git config --local user.name "$GITHUB_USERNAME"
+- git config --local user.email "$GITHUB_EMAIL"
+- export TRAVIS_TAG=v$(poetry run zelt --version)
+- git tag --force $TRAVIS_TAG
+deploy:
+- provider: script
+  script: poetry publish --build
+  on:
+    branch: master
+    python: '3.7'
+- provider: releases
+  api_key: "$GITHUB_TOKEN"
+  file_glob: true
+  file: dist/*
+  skip_cleanup: true
+  on:
+    tags: true
+    branch: master
+    python: '3.7'
+env:
+  global:
+  - secure: srbKwlHyxO99svj3AHVsE1dzuCajaOwg8jMAtu4A6FAiXa1XWe7TDQJl2+Ebw6x1aWBCsmo7cYu+nTcuVQCM2s3pKhUUPbs0cabiDtPnzLXUE08SPsZCsPxQd46L8NjR+JttnKOXlatU4xCiQEusagqi/+XFbiD2EDUxo9q3sjAPBRW7lxwiFCthLFaG6JdNaXoZrkxDZCgdLSJmsvihaCxsGEmMoq9pjmOOb9VwcbADCR+hAhGblddyfi9U4zOxIDMpQhYcHb5HTLDNR1z+Eeix4GUqS2SxJePdtQwwlNbAl4hnEvmdHxVnafRmVjQdEwchMI2SxedlRrOLVtibKRdkAAFBgt7LEGqF12cpPI6nxZw9Z6RGyuuk0k/1Fy+IDcRwYuwmE8GYGlzjs5pax+G3V7KbEQDsaeGS92jHbU9OGYd6mIvLRxv7cZCr21YSP2Ua8SAmcFJR17g4hCdX6570+2ToOO0pcmmStJ6YNezgC/S8BiBz/pM/5rRtWJxFLbvbAhMmlW8jREXkVB2Y1UoylS51BkbC/h58iLdpYnL/G2Y4oY4QlSaMSlj2Trj10HQeWtQffPgZv4jBNc/gmQVI5wpFInYLXV0sfQnXWGcvd8e2Bf3y2asjpE4G8QScHf654Fn6LA0/3X7EqRfKzpgJ3F8DTi1wljLNM5vN2ZA=
+  - secure: "3ibr/xusHvwBV4nj/VXbOtn7jFRFszjF8UcJZTGGCM7zb5vmegQs1/Ox/8A00dE79LelAyagjDRbolrwmwErOCNeP0IrHC+Bmu77nZTuE7NZTOr+A1IFwSugtcwoQo5SsJ1z9gL1WFcaodIdqWpaDRStcnT4sKDrMY8DQlbb654SwNpCpoWhv/hnqnDPEi3PUKkjfC8e6iqgBzfytaeJGxM/soM6Iimvc1beONJanQzC8A1MuyAipha1YlPhAAWcPMSoUyVbjriQAZl8iMowEvrBID6EuNbLCJQ6ucFyDsaX6nDkAi98mOIDQE1Wt/YvsKdQJ+6+fh9ZR/D1qJwYkks2YGr/NTAIMc6qJqcj7yoIQYgQItBlmMVaXaUZ1ph+eHd6rcQAAZF3kb+xfp9QdlXxgrAXQSjjmAp3/tSbIzyVwe44dePdGQ4TMevKmiXjAc3l1nDeEVsZPEPv2J6ky0Z8Ezs3WOYrjBsYcidrOT2zZLUXE9yICOCH0ftM0ePgMDFOuT16OpqfOY7teJvVp7t0g8QoLRVqF2Xy8NrrYl6nJsPyS8DUqYAP4kqvMdyK0Qmqttm+AQpu+Z40sPrVaBUEGJZgGKgZ5Kp5ziuD1CimL2kxWS9RHm1UXbhuk9fxp6ke30IuXkkQ6LXmvbdfqOlqPItt1iWPCLMN6wZkfR0="
+  - secure: "e98YEEgheaBLRgjY9NU6fwI1PwnApjLqmSF4m+a7J4BuWa9Qpay0JJptoHyCxs/0uX2IH3M5ujlj0ZevtxHPq3bl4Vo8vkK5p8pFPyrwz2oqeDmj7XU4WacvTJNPLFuG3UqHz3B9W2nZMIATLL7GBqEWVAFMIbrRavxq2VHypFMnFDBGUXNR2DSk8gFj4NeHloxfVQ5NXabloxedko5+LV8hNx24HdHSEhKk/HC7VnWgreBlbTKlsO2zCFOC8tY8I4L6XRh4mA2JG5dpUjfUXxWhm+XKRmPauiIBBzuMjKpl36Ukzgy07Q1UaaluSLjJjAW3PPJZOKTXRjtPauQOlv/7PtE8GJyNY0PWbt73HsHua51arhgePlfCLpZkIVxTefDVTvDzvSM0S/Go1f4UYiL/sC0QMRDRIvp4w2rNRV56F8biuonDVasxvWeIRXqy75Tjcy8h3RjuLi5BNLAAHr65YyBasPqY1T3xVFlhbrKDMi54gFHfrhVCKNyjkashq0MpyIn66/ykssZLQwuVy7GHieqAcykL+sLA8uM79uV8tsCHAawIjKMkoZfqqi1lcntlmtIlqs9cJaBE8VKuN6KjMxQQFmJdTVgePHYZh8mAX0lDgCsCeYUIoUqDFkFd0pq7Lg4bUetONVDPIet6Nnl8zVtrpfdnxtWx244l0vo="
+  - secure: "OQo9ziFQZ3OY4L2YCeSa4+dVwkt2xJs8bbo65bZrTV7V1a9x8WLr7wzFlerxNxXFRgZjeFanb6+ypG8fi102bQZY/Vjtj6UHcZTaD1LT28RDCDqA5whzEZIAwW08NM83A8em6a5G/GkgFHlt0gJH15iXsTnKj1C4SDNJzZdmeKrL4YaGybQGAckwwmWREE5QhgWyml+QZ/V/8Zj1/ZfCNWRjvGJQ9x2SEQe1O821aOqJXEJxTqYTzI1XOpl5wwmDjIa7MaxPAmRIEsTp5B+I4EJnaYYvKUoyzi/QWCOJLC/w1rys2UkRe40CosazsVkYL3BNU7z11OYoCYlZ7zFLzAybMr/CimOge+JurRs4l8g5gQD0IeSjRysRR49vQAYxezMFqUYr39SxGA9z1i4CSgPC76BfOhnFtrVIzL2PjM6SS8nyZnF4uMn8VJTdnmOd+CMRP5oWXb9q5Sm8nbZ94UehHdtPm7O2jVGijl1dXBa2iIyCn9sXdKHqKl2pwbI4zXxQr2rX9/DFDFoplitIXErp9LhpXpMRi3Bg+xYODfRWO4IDS33jkO7B37xFo0SUjC10Tqqc8DO5io+bUMyPIRAuPPVwVKPE6yJ0GVJ0wVvFAkL47/qxlOZ7D8RoGm/66UlggLIFA8lGDHETX4FWBvDT5ltIkBLgCTfQZ4vFi4g="
+
