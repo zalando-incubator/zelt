@@ -1,4 +1,4 @@
-<p align="center"><img src="images/zelt.png"/></div>
+<p align="center"><img src="images/zelt.png"/></p>
 
 ## Zalando end-to-end load tester
 
