@@ -2,6 +2,8 @@
 
 ## Zalando end-to-end load tester
 
+[![Build Status](https://travis-ci.org/zalando-incubator/zelt.svg?branch=master)](https://travis-ci.org/zalando-incubator/zelt) [![PyPI Version Badge](https://badgen.net/pypi/v/zelt)](https://pypi.org/project/har-transformer) [![Codacy Badge](https://api.codacy.com/project/badge/Grade/a74dee2bbbd64da8951a3cec5059dda3)](https://www.codacy.com/app/bmaher/zelt?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=zalando-incubator/zelt&amp;utm_campaign=Badge_Grade)  [![Codacy Badge](https://api.codacy.com/project/badge/Coverage/a74dee2bbbd64da8951a3cec5059dda3)](https://www.codacy.com/app/bmaher/zelt?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=zalando-incubator/zelt&amp;utm_campaign=Badge_Coverage)  [![Code Style](https://badgen.net/badge/code%20style/black/000)](https://github.com/ambv/black)
+
 A **command-line tool** for orchestrating the deployment of [Locust][] in [Kubernetes][].
 
 Use it in conjunction with [Transformer][] to run large-scale end-to-end load testing of your website.
