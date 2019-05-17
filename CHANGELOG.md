@@ -5,6 +5,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.2.7][] - 2019-05-17
+
+### Changed
+
+  - Alignment of badges in README.
+
 ## [1.2.6][] - 2019-05-17
 
 ### Added
@@ -53,6 +59,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - This changelog.
 
 
+[1.2.7]: https://github.com/zalando-incubator/zelt/compare/v1.2.6...v1.2.7
 [1.2.6]: https://github.com/zalando-incubator/zelt/compare/v1.2.5...v1.2.6
 [1.2.5]: https://github.com/zalando-incubator/zelt/compare/v1.2.4...v1.2.5
 [1.2.4]: https://github.com/zalando-incubator/zelt/compare/9513e05cb6f20ddb3459095ff771e1e8ad1ae299...3b5cc6bb09c923fa713d5f1348b39c7def97afeb
