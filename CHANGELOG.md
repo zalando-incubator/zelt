@@ -5,12 +5,23 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [1.2.5] - 2019-05-16
+## [1.2.6][] - 2019-05-17
+
+### Added
+
+  - Added badges to README.
+  - Publish code coverage after build.
+
+### Removed
+
+  - Removed redundant `delivery.yaml` file.
+
+## [1.2.5][] - 2019-05-16
 
 ### Fixed
 
  - Change the configuration of [Zappr](.zappr.yaml) to comply with the [Rules of Play].
- 
+
 [Rules of Play]: https://opensource.zalando.com/docs/releasing/index/#be-compliant
 
 ## [1.2.4][] - 2019-05-10
@@ -18,18 +29,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
   - Use Travis for CI.
-
-### Changed
-
- -
-
-### Fixed
-
- -
-
-### Removed
-
-  -
 
 ## [1.2.3][] - 2019-05-10
 
@@ -46,10 +45,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
   - Missing PyYAML dependency.
 
-### Removed
-
-  -
-
 ## [1.1.0][] - 2019-05-10
 
 ### Added
@@ -57,18 +52,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Implemented `-v`/`--version` option to show Zelt version.
   - This changelog.
 
-### Changed
 
-  -
-
-### Fixed
-
-  -
-
-### Removed
-
-  -
-
+[1.2.6]: https://github.com/zalando-incubator/zelt/compare/v1.2.5...v1.2.6
+[1.2.5]: https://github.com/zalando-incubator/zelt/compare/v1.2.4...v1.2.5
 [1.2.4]: https://github.com/zalando-incubator/zelt/compare/9513e05cb6f20ddb3459095ff771e1e8ad1ae299...3b5cc6bb09c923fa713d5f1348b39c7def97afeb
 [1.2.3]: https://github.com/zalando-incubator/zelt/compare/022588a3c51b3b313bf1a9df03db96a5a7a3e9bb...9513e05cb6f20ddb3459095ff771e1e8ad1ae299
 [1.1.0]: https://github.com/zalando-incubator/zelt/compare/aca82a82608a931fe9d34b0271102feac0ee7e28...022588a3c51b3b313bf1a9df03db96a5a7a3e9bb
