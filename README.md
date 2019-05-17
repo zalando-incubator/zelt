@@ -1,8 +1,14 @@
 <p align="center"><img src="images/zelt.png"/></p>
 
-## Zalando end-to-end load tester
+<h2 align="center">Zalando end-to-end load tester</h2>
 
-[![Build Status](https://travis-ci.org/zalando-incubator/zelt.svg?branch=master)](https://travis-ci.org/zalando-incubator/zelt) [![PyPI Version Badge](https://badgen.net/pypi/v/zelt)](https://pypi.org/project/zelt) [![Codacy Badge](https://api.codacy.com/project/badge/Grade/a74dee2bbbd64da8951a3cec5059dda3)](https://www.codacy.com/app/bmaher/zelt?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=zalando-incubator/zelt&amp;utm_campaign=Badge_Grade)  [![Codacy Badge](https://api.codacy.com/project/badge/Coverage/a74dee2bbbd64da8951a3cec5059dda3)](https://www.codacy.com/app/bmaher/zelt?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=zalando-incubator/zelt&amp;utm_campaign=Badge_Coverage)  [![Code Style](https://badgen.net/badge/code%20style/black/000)](https://github.com/ambv/black)
+<p align="center">
+<a href="https://travis-ci.org/zalando-incubator/zelt"><img alt="Build status" src="https://travis-ci.org/zalando-incubator/zelt.svg?branch=master"></a>
+<a href="https://pypi.org/project/zelt"><img alt="PyPI" src="https://badgen.net/pypi/v/zelt"></a>
+<a href="https://www.codacy.com/app/bmaher/zelt?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=zalando-incubator/zelt&amp;utm_campaign=Badge_Grade"><img alt="Code quality" src="https://api.codacy.com/project/badge/Grade/a74dee2bbbd64da8951a3cec5059dda3"></a>
+<a href="https://www.codacy.com/app/bmaher/zelt?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=zalando-incubator/zelt&amp;utm_campaign=Badge_Coverage"><img alt="Code coverage" src="https://api.codacy.com/project/badge/Coverage/a74dee2bbbd64da8951a3cec5059dda3"></a>
+<a href="https://github.com/ambv/black"><img alt="Code style: black" src="https://badgen.net/badge/code%20style/black/000"></a>
+</p>
 
 A **command-line tool** for orchestrating the deployment of [Locust][] in [Kubernetes][].
 
