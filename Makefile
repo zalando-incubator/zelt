@@ -9,3 +9,7 @@ test:
 .PHONY: lint
 lint:
 	poetry run pylint zelt > pylint-report.txt || true
+
+.PHONY: docs
+docs:
+	poetry run $(MAKE) -C docs html

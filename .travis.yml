@@ -10,6 +10,7 @@ install:
 script:
 - make test
 - make lint
+- make docs
 after_success:
 - python-codacy-coverage -r coverage.xml
 before_deploy:
