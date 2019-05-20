@@ -1,20 +1,38 @@
-.. Zelt documentation master file, created by
-   sphinx-quickstart on Fri May 17 16:12:42 2019.
-   You can adapt this file completely to your liking, but it should at least
-   contain the root `toctree` directive.
+.. title:: Zelt - documentation
 
-Welcome to Zelt's documentation!
-================================
+.. image:: _static/zelt.png
+    :alt: Zelt logo
+    :align: center
+
+**Welcome to Zelt's documentation!**
+
+Getting Started
+---------------
+
+See `our README`_ for basic information like:
+
+.. _our README: https://github.com/zalando-incubator/zelt/blob/master/README.md
+
+- how to **install** Zelt,
+- how to use the ``zelt`` **command-line tool**
+
+How to ...
+----------
+
+.. toctree::
+   :maxdepth: 1
+
+   Contributing <Contributing>
+
+Other Topics
+------------
+
+.. toctree::
+   :maxdepth: 1
+
+   Changelog
 
 .. toctree::
    :maxdepth: 2
-   :caption: Contents:
 
-
-
-Indices and tables
-==================
-
-* :ref:`genindex`
-* :ref:`modindex`
-* :ref:`search`
+   dev
