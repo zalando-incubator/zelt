@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "zelt"
-version = "1.2.7"
+version = "1.2.8"
 description = "Zalando end-to-end load tester"
 authors = [
     "Brian Maher <brian.maher@zalando.de>",
