@@ -59,8 +59,8 @@ The only required dependency for local deployment is Poetry_.
 
 .. _Poetry: https://poetry.eustace.io/docs/#installation
 
-Once you have Poetry, you can simply call ``make`` to install all
-necessary dependencies and run all tests and linters.
+Once you have Poetry, you can simply call ``make install`` to install all
+necessary dependencies.
 This mimics what happens in our continuous integration pipeline, so you won't
 get surprised.
 
@@ -70,8 +70,6 @@ Conventions
 '''''''''''
 
 - All source code is formatted using black_.
-
-- flake8_ does not find any problems in the :mod:`zelt` module tree.
 
 - All non-private functions are reasonably covered by unit tests runnable
   with Pytest_ (via ``make test``).
@@ -85,7 +83,6 @@ Conventions
   reference to the relevant pull request or issue identifiers.
 
 .. _black: https://black.readthedocs.io/
-.. _flake8: http://flake8.pycqa.org/
 .. _Pytest: https://docs.pytest.org/
 .. _Sphinx: https://www.sphinx-doc.org/
 
@@ -142,20 +139,12 @@ Suggested workflow
 
 .. _git bisect: https://git-scm.com/docs/git-bisect
 
-7. Check that all **tests** (including your *new* ones) succeed, and that the
-   **linters** are still happy::
+7. Check that all **tests** (including your *new* ones) succeed::
 
-      $ make test lint
+      $ make test
 
    If this fails on your local machine, there is a good risk that it will also
    fail on Travis, preventing your pull request from being merged.
-
-   .. note::
-
-      If you notice that tests or linters are *already* failing when you clone
-      the repository, please open a bug report!
-      This would indicate that our developer environment or instructions are
-      not general enough.
 
 8. `Project maintainers`_ may **comment on your work** as you progress.
    If they don't and you would like some feedback, feel free to mention_ one of
