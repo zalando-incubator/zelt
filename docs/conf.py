@@ -20,8 +20,8 @@
 # -- Project information -----------------------------------------------------
 
 project = "Zelt"
-copyright = "2019, Brian Maher"
-author = "Brian Maher"
+copyright = "2019, Zalando SE"
+author = "the Zelt project maintainers"
 
 # The short X.Y version
 version = ""
