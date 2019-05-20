@@ -42,11 +42,12 @@ release = version
 # ones.
 extensions = [
     "sphinx.ext.autodoc",
+    "sphinx_autodoc_typehints",
     "sphinx.ext.doctest",
-    "sphinx.ext.intersphinx",
-    "sphinx.ext.todo",
     "sphinx.ext.coverage",
     "sphinx.ext.viewcode",
+    "sphinx.ext.intersphinx",
+    "sphinx_issues",
 ]
 
 # Add any paths that contain templates here, relative to this directory.
