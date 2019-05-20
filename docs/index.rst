@@ -26,13 +26,3 @@ How to ...
 
 Other Topics
 ------------
-
-.. toctree::
-   :maxdepth: 1
-
-   Changelog
-
-.. toctree::
-   :maxdepth: 2
-
-   dev
