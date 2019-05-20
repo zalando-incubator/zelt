@@ -24,9 +24,11 @@ copyright = "2019, Zalando SE"
 author = "the Zelt project maintainers"
 
 # The short X.Y version
-version = ""
+import pkg_resources
+
+version = pkg_resources.get_distribution("zelt").version
 # The full version, including alpha/beta/rc tags
-release = ""
+release = version
 
 
 # -- General configuration ---------------------------------------------------
@@ -131,7 +133,7 @@ latex_elements = {
 # (source start file, target name, title,
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
-    (master_doc, "Zelt.tex", "Zelt Documentation", "Brian Maher", "manual")
+    (master_doc, "Zelt.tex", "Zelt Documentation", "Zelt Maintainers", "manual")
 ]
 
 
@@ -154,7 +156,7 @@ texinfo_documents = [
         "Zelt Documentation",
         author,
         "Zelt",
-        "One line description of project.",
+        "Zalando end-to-end load tester",
         "Miscellaneous",
     )
 ]
