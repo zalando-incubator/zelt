@@ -68,6 +68,9 @@ instance/
 # IntelliJ stuff:
 .idea/
 
+# VSCode stuff:
+.vscode
+
 # Sphinx documentation
 docs/_build/
 
