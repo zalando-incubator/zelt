@@ -5,6 +5,18 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.2.11][] - 2019-05-21
+
+### Added
+
+  - Documentation for first-time use
+  - README converted to RST format (README.rst)
+  - README linting
+
+### Removed
+
+  - README.md
+
 ## [1.2.10][] - 2019-05-21
 
 ### Fixed
@@ -81,6 +93,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Implemented `-v`/`--version` option to show Zelt version.
   - This changelog.
 
+[1.2.11]: https://github.com/zalando-incubator/zelt/compare/v1.2.10...v1.2.11
 [1.2.10]: https://github.com/zalando-incubator/zelt/compare/v1.2.9...v1.2.10
 [1.2.9]: https://github.com/zalando-incubator/zelt/compare/v1.2.8...v1.2.9
 [1.2.8]: https://github.com/zalando-incubator/zelt/compare/v1.2.7...v1.2.8
