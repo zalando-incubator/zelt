@@ -24,6 +24,8 @@ Zalando end-to-end load tester
    :alt: Code style: Black
    :target: https://github.com/ambv/black
 
+|
+
 A **command-line tool** for orchestrating the deployment of
 Locust_ in Kubernetes_.
 
