@@ -43,6 +43,7 @@ pytest-cov = "^2.6"
 pytest = "^4.3"
 pylint = "^2.3"
 pytest-watch = "^4.2"
+readme_renderer = "^24.0"
 
 [tool.poetry.scripts]
 zelt = "main:cli"
