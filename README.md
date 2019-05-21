@@ -48,7 +48,7 @@ Zelt can transform HAR file(s) into a locustfile and deploy it along with Locust
 zelt from-har PATH_TO_HAR_FILES --manifests PATH_TO_MANIFESTS
 ```
 
-**N.B** This requires [Transformer][] to be installed. For more information about Transformer, please refer to its [documentation][].
+**N.B** This requires [Transformer][] to be installed. For more information about Transformer, please refer to [its documentation][].
 
 #### Rescale a deployment
 
@@ -100,7 +100,7 @@ zelt from-har --config examples/config/config.yaml
 
 ### Documentation
 
-Coming soon...
+Take a look at our [documentation][] for more details.
 
 ### Contributing
 
@@ -127,9 +127,10 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 [Transformer]: https://github.com/zalando-incubator/transformer
 [Python 3.6+]: https://www.python.org/downloads/
 [using the correct cluster]: https://kubernetes.io/docs/reference/kubectl/cheatsheet/#kubectl-context-and-configuration
-[documentation]: https://transformer.readthedocs.io/
+[its documentation]: https://transformer.readthedocs.io/
 [workers]: https://docs.locust.io/en/stable/running-locust-distributed.html
 [@bmaher]: https://github.com/bmaher
 [@tortila]: https://github.com/tortila
 [@thilp]: https://github.com/thilp
+[documentation]: https://zelt.readthedocs.io/
 [SemVer]: http://semver.org/
