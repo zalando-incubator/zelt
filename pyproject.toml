@@ -8,7 +8,7 @@ authors = [
     "Thibaut Le Page <thibaut.le.page@zalando.de>"
 ]
 license = "MIT"
-readme = "README.md"
+readme = "README.rst"
 homepage = "https://github.com/zalando-incubator/zelt"
 repository = "https://github.com/zalando-incubator/zelt"
 keywords = ["load testing", "locust", "kubernetes"]
