@@ -59,7 +59,7 @@ The decision for which mode to use depends on how much load you wish
 to generate and the hardware available to you.
 
 In combined mode, Locust can generate ~500 users (per CPU core).
-This is the equivalent of running Locust locally.
+This equivalent to running Locust locally.
 
 In distributed mode, Locust uses workers to generate the load. Therefore,
 the number of users can be calculated as the number of workers you deploy
@@ -175,7 +175,7 @@ Locust deployment from Kubernetes.
     zelt delete -m PATH_TO_MANIFESTS
 
 **N.B.** Make sure you have downloaded your Locust reports if you want them
-before doing this as they will be deleted!
+before doing this or they will be deleted!
 
 .. _minikube: https://kubernetes.io/docs/setup/minikube/
 .. _EKS: https://aws.amazon.com/eks/
