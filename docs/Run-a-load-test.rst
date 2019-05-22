@@ -112,7 +112,7 @@ First, ensure you are logged in to the correct cluster e.g.:
 
 **From HAR**
 
-Zelt will use Transformer to convert your HAR file to a locustfile
+Zelt will use Transformer_ to convert your HAR file to a locustfile
 before deploying it to Kubernetes.
 
 .. code:: bash
@@ -190,4 +190,5 @@ before doing this as they will be deleted!
 .. _service: https://kubernetes.io/docs/concepts/services-networking/service/
 .. _ingress: https://kubernetes.io/docs/concepts/services-networking/ingress/
 .. _`Download them`: https://github.com/zalando-incubator/zelt/tree/master/examples/manifests/combined
+.. _Transformer: https://github.com/zalando-incubator/Transformer
 .. _`Locust's documentation`: https://docs.locust.io/en/stable/what-is-locust.html
