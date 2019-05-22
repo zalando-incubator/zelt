@@ -9,6 +9,7 @@ test:
 .PHONY: lint
 lint:
 	poetry run pylint zelt > pylint-report.txt || true
+	poetry run python -m readme_renderer README.rst -o /dev/null
 
 .PHONY: docs
 docs:
