@@ -4,6 +4,7 @@ Run a load test using Zelt
 ==========================
 
 This guide will take you through:
+
  - Setting up Kubernetes
  - Defining your load test
  - Using Zelt to deploy Locust
