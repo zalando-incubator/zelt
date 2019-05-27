@@ -3,6 +3,10 @@ language: python
 python:
 - '3.6'
 - '3.7'
+# Don't build tags.
+branches:
+  except:
+    - /^v\d+\.\d+(\.\d+)?(-\S*)?$/
 install:
 - pip install --upgrade pip==18.1
 - pip install poetry codacy-coverage
