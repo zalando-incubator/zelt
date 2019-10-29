@@ -1,14 +1,7 @@
 from unittest.mock import MagicMock, patch
 
 import pytest
-from kubernetes.client import (
-    ExtensionsV1beta1Deployment,
-    V1Namespace,
-    V1Service,
-    V1beta1Ingress,
-    ExtensionsV1beta1DeploymentSpec,
-    V1ObjectMeta,
-)
+from kubernetes.client import V1Namespace
 from kubernetes.client.rest import ApiException
 from tenacity import wait_none, RetryError, stop_after_attempt
 
@@ -107,7 +100,7 @@ class TestDeleteNamespace:
 
 class TestCreateDeployment:
     @patch("kubernetes.config.load_kube_config")
-    @patch("zelt.kubernetes.client.ExtensionsV1beta1Api")
+    @patch("zelt.kubernetes.client.AppsV1Api")
     def test_it_calls_kubernetes_api(self, extensions_api, *_):
         data = {
             "kind": "deployment",
@@ -120,7 +113,7 @@ class TestCreateDeployment:
         )
 
     @patch("kubernetes.config.load_kube_config")
-    @patch("zelt.kubernetes.client.ExtensionsV1beta1Api")
+    @patch("zelt.kubernetes.client.AppsV1Api")
     def test_it_raises_exception(self, extensions_api, *_):
         extensions_api().create_namespaced_deployment.side_effect = ApiException(
             MagicMock()
@@ -144,8 +137,8 @@ class TestRescaleDeployment:
         with pytest.raises(ValueError, match="positive number of (r|R)eplicas"):
             rescale_deployment(MagicMock(), -2)
 
-    @patch("zelt.kubernetes.client.ExtensionsV1beta1Api.read_namespaced_deployment")
-    @patch("zelt.kubernetes.client.ExtensionsV1beta1Api.replace_namespaced_deployment")
+    @patch("zelt.kubernetes.client.AppsV1Api.read_namespaced_deployment")
+    @patch("zelt.kubernetes.client.AppsV1Api.replace_namespaced_deployment")
     def test_it_redeploys_when_given_a_positive_number_of_replicas(self, replace, read):
         manifest = MagicMock()
         rescale_deployment(manifest, 2)
@@ -156,7 +149,7 @@ class TestRescaleDeployment:
 class TestDeleteDeployments:
     @patch("zelt.kubernetes.client.await_no_resources_found")
     @patch(
-        "zelt.kubernetes.client.ExtensionsV1beta1Api.delete_collection_namespaced_deployment"
+        "zelt.kubernetes.client.AppsV1Api.delete_collection_namespaced_deployment"
     )
     def test_it_calls_kubernetes_api(self, delete, waiting, *_):
         namespace_name = "some_deployments"
@@ -167,7 +160,7 @@ class TestDeleteDeployments:
 
     @patch("zelt.kubernetes.client.await_no_resources_found")
     @patch(
-        "zelt.kubernetes.client.ExtensionsV1beta1Api.delete_collection_namespaced_deployment"
+        "zelt.kubernetes.client.AppsV1Api.delete_collection_namespaced_deployment"
     )
     def test_it_raises_exception(self, delete, waiting):
         delete.side_effect = ApiException()
@@ -180,7 +173,7 @@ class TestDeleteDeployments:
 
     @patch("zelt.kubernetes.client.await_no_resources_found")
     @patch(
-        "zelt.kubernetes.client.ExtensionsV1beta1Api.delete_collection_namespaced_deployment"
+        "zelt.kubernetes.client.AppsV1Api.delete_collection_namespaced_deployment"
     )
     def test_it_skips_deletion_when_deployments_not_found(self, delete, waiting):
         delete.side_effect = ApiException(status=STATUS_NOT_FOUND)
@@ -303,7 +296,7 @@ class TestDeleteService:
 
 class TestCreateIngress:
     @patch("kubernetes.config.load_kube_config")
-    @patch("zelt.kubernetes.client.ExtensionsV1beta1Api")
+    @patch("zelt.kubernetes.client.NetworkingV1beta1Api")
     def test_it_calls_kubernetes_api(self, extensions_api, *_):
         manifest = Manifest(
             body={
@@ -321,7 +314,7 @@ class TestCreateIngress:
         )
 
     @patch("kubernetes.config.load_kube_config")
-    @patch("zelt.kubernetes.client.ExtensionsV1beta1Api")
+    @patch("zelt.kubernetes.client.NetworkingV1beta1Api")
     def test_it_raises_exception(self, extensions_api, *_):
         extensions_api().create_namespaced_ingress.side_effect = ApiException(
             MagicMock()
@@ -342,7 +335,7 @@ class TestCreateIngress:
 
 class TestDeleteIngress:
     @patch("zelt.kubernetes.client.await_no_resources_found")
-    @patch("zelt.kubernetes.client.ExtensionsV1beta1Api.delete_namespaced_ingress")
+    @patch("zelt.kubernetes.client.NetworkingV1beta1Api.delete_namespaced_ingress")
     def test_it_calls_kubernetes_api(self, delete, waiting):
         ingress_name = "an_ingress"
         namespace_name = "a_namespace"
@@ -353,7 +346,7 @@ class TestDeleteIngress:
         waiting.assert_called_once()
 
     @patch("zelt.kubernetes.client.await_no_resources_found")
-    @patch("zelt.kubernetes.client.ExtensionsV1beta1Api.delete_namespaced_ingress")
+    @patch("zelt.kubernetes.client.NetworkingV1beta1Api.delete_namespaced_ingress")
     def test_it_skips_deletion_when_ingress_not_found(self, delete, waiting):
         delete.side_effect = ApiException(status=STATUS_NOT_FOUND)
 
@@ -364,7 +357,7 @@ class TestDeleteIngress:
         assert result is None
 
     @patch("zelt.kubernetes.client.await_no_resources_found")
-    @patch("zelt.kubernetes.client.ExtensionsV1beta1Api.delete_namespaced_ingress")
+    @patch("zelt.kubernetes.client.NetworkingV1beta1Api.delete_namespaced_ingress")
     def test_it_raises_exception(self, delete, waiting):
         delete.side_effect = ApiException()
 
