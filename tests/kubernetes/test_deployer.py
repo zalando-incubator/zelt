@@ -16,7 +16,7 @@ def manifest_set(tmp_path: Path) -> ManifestSet:
     with manifest_file.open("w") as f:
         f.write(
             """
-        apiVersion: extensions/v1beta1
+        apiVersion: apps/v1
         kind: Deployment
         metadata:
             name: a_controller
