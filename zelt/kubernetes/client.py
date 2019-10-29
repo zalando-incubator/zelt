@@ -13,7 +13,7 @@ from kubernetes.client import (
     V1Status,
     V1ContainerStatus,
     NetworkingV1beta1Api,
-    NetworkingV1beta1Ingress
+    NetworkingV1beta1Ingress,
 )
 from kubernetes.client.rest import ApiException
 from tenacity import retry, stop_after_delay, wait_fixed, retry_if_exception_type
@@ -76,9 +76,7 @@ def create_deployment(deployment: Manifest) -> V1Deployment:
         raise
 
 
-def rescale_deployment(
-    manifest: Manifest, replicas: int
-) -> V1Deployment:
+def rescale_deployment(manifest: Manifest, replicas: int) -> V1Deployment:
     logging.info("Rescaling Deployment %r to %s Replicas...", manifest.name, replicas)
 
     if replicas < 0:
@@ -113,9 +111,7 @@ def rescale_deployment(
 def delete_deployments(namespace: str) -> Optional[V1Status]:
     logging.info("Deleting Deployments in Namespace %r...", namespace)
     try:
-        AppsV1Api().delete_collection_namespaced_deployment(
-            namespace=namespace
-        )
+        AppsV1Api().delete_collection_namespaced_deployment(namespace=namespace)
     except ApiException as err:
         if err.status == STATUS_NOT_FOUND:
             logging.debug("Skipping Deployment deletion: %s", err.reason)

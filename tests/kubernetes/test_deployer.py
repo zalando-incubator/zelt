@@ -116,9 +116,7 @@ class TestDeleteResources:
     @patch("zelt.kubernetes.client.CoreV1Api.delete_namespaced_config_map")
     @patch("zelt.kubernetes.client.NetworkingV1beta1Api.delete_namespaced_ingress")
     @patch("zelt.kubernetes.client.await_no_resources_found")
-    @patch(
-        "zelt.kubernetes.client.AppsV1Api.delete_collection_namespaced_deployment"
-    )
+    @patch("zelt.kubernetes.client.AppsV1Api.delete_collection_namespaced_deployment")
     def test_it_deletes_all_given_manifests_and_configmap(
         self,
         delete_deployments,

@@ -44,6 +44,7 @@ pytest = "^4.3"
 pylint = "^2.3"
 pytest-watch = "^4.2"
 readme_renderer = "^24.0"
+black = {version = "^18.3-alpha.0",allows-prereleases = true}
 
 [tool.poetry.scripts]
 zelt = "main:cli"

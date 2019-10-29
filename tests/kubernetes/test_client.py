@@ -148,9 +148,7 @@ class TestRescaleDeployment:
 
 class TestDeleteDeployments:
     @patch("zelt.kubernetes.client.await_no_resources_found")
-    @patch(
-        "zelt.kubernetes.client.AppsV1Api.delete_collection_namespaced_deployment"
-    )
+    @patch("zelt.kubernetes.client.AppsV1Api.delete_collection_namespaced_deployment")
     def test_it_calls_kubernetes_api(self, delete, waiting, *_):
         namespace_name = "some_deployments"
         delete_deployments(namespace_name)
@@ -159,9 +157,7 @@ class TestDeleteDeployments:
         waiting.assert_called_once()
 
     @patch("zelt.kubernetes.client.await_no_resources_found")
-    @patch(
-        "zelt.kubernetes.client.AppsV1Api.delete_collection_namespaced_deployment"
-    )
+    @patch("zelt.kubernetes.client.AppsV1Api.delete_collection_namespaced_deployment")
     def test_it_raises_exception(self, delete, waiting):
         delete.side_effect = ApiException()
 
@@ -172,9 +168,7 @@ class TestDeleteDeployments:
         waiting.assert_not_called()
 
     @patch("zelt.kubernetes.client.await_no_resources_found")
-    @patch(
-        "zelt.kubernetes.client.AppsV1Api.delete_collection_namespaced_deployment"
-    )
+    @patch("zelt.kubernetes.client.AppsV1Api.delete_collection_namespaced_deployment")
     def test_it_skips_deletion_when_deployments_not_found(self, delete, waiting):
         delete.side_effect = ApiException(status=STATUS_NOT_FOUND)
 
