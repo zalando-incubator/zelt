@@ -22,12 +22,17 @@ spec:
       - name: init-locust-controller-ready
         image: busybox
         command: ['sh', '-c', 'until nc -vz -w 3 zelt-service 8089; do echo waiting for Locust Controller; sleep 2; done;']
+        resources:
+          limits:
+            memory: 100Mi
       containers:
         - name: locust
           image: registry.opensource.zalan.do/automata/locust
           resources:
             requests:
               cpu: 0.25
+              memory: 100Mi
+            limits:
               memory: 100Mi
           # Note that the "master/slave" terminology here is from Locust.
           # We refer to them as "controller" and "worker" respectively.
