@@ -16,7 +16,7 @@ def manifest_set(tmp_path: Path) -> ManifestSet:
     with manifest_file.open("w") as f:
         f.write(
             """
-        apiVersion: extensions/v1beta1
+        apiVersion: apps/v1
         kind: Deployment
         metadata:
             name: a_controller
@@ -58,8 +58,8 @@ class TestCreateResources:
     @patch("zelt.kubernetes.client.CoreV1Api.create_namespace")
     @patch("zelt.kubernetes.client.CoreV1Api.create_namespaced_service")
     @patch("zelt.kubernetes.client.CoreV1Api.create_namespaced_config_map")
-    @patch("zelt.kubernetes.client.ExtensionsV1beta1Api.create_namespaced_ingress")
-    @patch("zelt.kubernetes.client.ExtensionsV1beta1Api.create_namespaced_deployment")
+    @patch("zelt.kubernetes.client.NetworkingV1beta1Api.create_namespaced_ingress")
+    @patch("zelt.kubernetes.client.AppsV1Api.create_namespaced_deployment")
     @patch("zelt.kubernetes.client.wait_until_pod_ready")
     def test_it_deploys_all_given_manifests_and_configmap(
         self,
@@ -86,8 +86,8 @@ class TestCreateResources:
     @patch("zelt.kubernetes.client.config")
     @patch("zelt.kubernetes.client.CoreV1Api.create_namespace")
     @patch("zelt.kubernetes.client.CoreV1Api.create_namespaced_service")
-    @patch("zelt.kubernetes.client.ExtensionsV1beta1Api.create_namespaced_ingress")
-    @patch("zelt.kubernetes.client.ExtensionsV1beta1Api.create_namespaced_deployment")
+    @patch("zelt.kubernetes.client.NetworkingV1beta1Api.create_namespaced_ingress")
+    @patch("zelt.kubernetes.client.AppsV1Api.create_namespaced_deployment")
     @patch("zelt.kubernetes.client.wait_until_pod_ready")
     def test_it_does_not_deploy_workers_when_given_none(
         self,
@@ -114,11 +114,9 @@ class TestDeleteResources:
     @patch("zelt.kubernetes.client.CoreV1Api.delete_namespace")
     @patch("zelt.kubernetes.client.CoreV1Api.delete_namespaced_service")
     @patch("zelt.kubernetes.client.CoreV1Api.delete_namespaced_config_map")
-    @patch("zelt.kubernetes.client.ExtensionsV1beta1Api.delete_namespaced_ingress")
+    @patch("zelt.kubernetes.client.NetworkingV1beta1Api.delete_namespaced_ingress")
     @patch("zelt.kubernetes.client.await_no_resources_found")
-    @patch(
-        "zelt.kubernetes.client.ExtensionsV1beta1Api.delete_collection_namespaced_deployment"
-    )
+    @patch("zelt.kubernetes.client.AppsV1Api.delete_collection_namespaced_deployment")
     def test_it_deletes_all_given_manifests_and_configmap(
         self,
         delete_deployments,
@@ -168,7 +166,7 @@ class TestUpdateWorkerPods:
 
 
 class TestRescaleWorkerDeployment:
-    @patch("zelt.kubernetes.client.ExtensionsV1beta1Api.replace_namespaced_deployment")
+    @patch("zelt.kubernetes.client.AppsV1Api.replace_namespaced_deployment")
     def test_it_does_not_rescale_when_not_given_a_worker_manifest(
         self, rescale, manifest_set: ManifestSet
     ):
@@ -177,8 +175,8 @@ class TestRescaleWorkerDeployment:
         rescale.assert_not_called()
 
     @patch("zelt.kubernetes.client.config")
-    @patch("zelt.kubernetes.client.ExtensionsV1beta1Api.read_namespaced_deployment")
-    @patch("zelt.kubernetes.client.ExtensionsV1beta1Api.replace_namespaced_deployment")
+    @patch("zelt.kubernetes.client.AppsV1Api.read_namespaced_deployment")
+    @patch("zelt.kubernetes.client.AppsV1Api.replace_namespaced_deployment")
     def test_it_rescales_when_given_a_worker_manifest(
         self, rescale, _read, _config, manifest_set: ManifestSet
     ):

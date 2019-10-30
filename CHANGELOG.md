@@ -5,6 +5,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.2.13][] - 2019-10-29
+
+### Fixed
+
+  - Move away from deprecated Kubernetes API; switch from `extensions/v1beta1` to `apps/v1` 
+  for Deployment definitions.
+  - Switch from `extensions/v1beta1` to `networking.k8s.io/v1beta1` for Ingress definitions.
+
 ## [1.2.12][] - 2019-05-22
 
 ### Fixed
@@ -99,6 +107,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Implemented `-v`/`--version` option to show Zelt version.
   - This changelog.
 
+[1.2.13]: https://github.com/zalando-incubator/zelt/compare/v1.2.12...v1.2.13
 [1.2.12]: https://github.com/zalando-incubator/zelt/compare/v1.2.11...v1.2.12
 [1.2.11]: https://github.com/zalando-incubator/zelt/compare/v1.2.10...v1.2.11
 [1.2.10]: https://github.com/zalando-incubator/zelt/compare/v1.2.9...v1.2.10

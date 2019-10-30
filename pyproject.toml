@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "zelt"
-version = "1.2.12"
+version = "1.2.13"
 description = "Zalando end-to-end load tester"
 authors = [
     "Brian Maher <brian.maher@zalando.de>",
@@ -23,7 +23,7 @@ packages = [{include = "zelt"}, { include = "main.py"}]
 [tool.poetry.dependencies]
 python = "^3.6"
 har-transformer = "^1.0"
-kubernetes = "^8.0"
+kubernetes = "^10.0.1"
 locustio = "^0.9.0"
 boto3 = "^1.9"
 greenlet = "^0.4.15"
@@ -44,6 +44,7 @@ pytest = "^4.3"
 pylint = "^2.3"
 pytest-watch = "^4.2"
 readme_renderer = "^24.0"
+black = {version = "^18.3-alpha.0",allows-prereleases = true}
 
 [tool.poetry.scripts]
 zelt = "main:cli"

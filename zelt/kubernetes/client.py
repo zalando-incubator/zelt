@@ -3,16 +3,17 @@ from typing import List, Optional, Callable
 
 from kubernetes import config
 from kubernetes.client import (
-    ExtensionsV1beta1Api,
     CoreV1Api,
     V1Namespace,
-    ExtensionsV1beta1Deployment,
+    AppsV1Api,
     V1Pod,
     V1Service,
-    V1beta1Ingress,
     V1DeleteOptions,
+    V1Deployment,
     V1Status,
     V1ContainerStatus,
+    NetworkingV1beta1Api,
+    NetworkingV1beta1Ingress,
 )
 from kubernetes.client.rest import ApiException
 from tenacity import retry, stop_after_delay, wait_fixed, retry_if_exception_type
@@ -64,10 +65,10 @@ def delete_namespace(name: str) -> Optional[V1Status]:
     await_no_resources_found(CoreV1Api().read_namespace, name=name)
 
 
-def create_deployment(deployment: Manifest) -> ExtensionsV1beta1Deployment:
+def create_deployment(deployment: Manifest) -> V1Deployment:
     logging.info("Creating Deployment %r...", deployment.name)
     try:
-        return ExtensionsV1beta1Api().create_namespaced_deployment(
+        return AppsV1Api().create_namespaced_deployment(
             namespace=deployment.namespace, body=deployment.body
         )
     except ApiException as err:
@@ -75,9 +76,7 @@ def create_deployment(deployment: Manifest) -> ExtensionsV1beta1Deployment:
         raise
 
 
-def rescale_deployment(
-    manifest: Manifest, replicas: int
-) -> ExtensionsV1beta1Deployment:
+def rescale_deployment(manifest: Manifest, replicas: int) -> V1Deployment:
     logging.info("Rescaling Deployment %r to %s Replicas...", manifest.name, replicas)
 
     if replicas < 0:
@@ -85,7 +84,7 @@ def rescale_deployment(
 
     logging.debug("Fetching existing Deployment %r...", manifest.name)
     try:
-        deployment = ExtensionsV1beta1Api().read_namespaced_deployment(
+        deployment = AppsV1Api().read_namespaced_deployment(
             name=manifest.name, namespace=manifest.namespace
         )
     except ApiException as err:
@@ -101,7 +100,7 @@ def rescale_deployment(
 
     logging.debug("Redeploying Deployment %r...", manifest.name)
     try:
-        return ExtensionsV1beta1Api().replace_namespaced_deployment(
+        return AppsV1Api().replace_namespaced_deployment(
             name=manifest.name, namespace=manifest.namespace, body=deployment
         )
     except ApiException as err:
@@ -112,9 +111,7 @@ def rescale_deployment(
 def delete_deployments(namespace: str) -> Optional[V1Status]:
     logging.info("Deleting Deployments in Namespace %r...", namespace)
     try:
-        ExtensionsV1beta1Api().delete_collection_namespaced_deployment(
-            namespace=namespace
-        )
+        AppsV1Api().delete_collection_namespaced_deployment(namespace=namespace)
     except ApiException as err:
         if err.status == STATUS_NOT_FOUND:
             logging.debug("Skipping Deployment deletion: %s", err.reason)
@@ -124,7 +121,7 @@ def delete_deployments(namespace: str) -> Optional[V1Status]:
         )
         raise
     await_no_resources_found(
-        ExtensionsV1beta1Api().list_namespaced_deployment, namespace=namespace
+        AppsV1Api().list_namespaced_deployment, namespace=namespace
     )
 
 
@@ -154,10 +151,10 @@ def delete_service(name: str, namespace: str) -> Optional[V1Status]:
     await_no_resources_found(CoreV1Api().list_namespaced_service, namespace=namespace)
 
 
-def create_ingress(ingress: Manifest) -> V1beta1Ingress:
+def create_ingress(ingress: Manifest) -> NetworkingV1beta1Ingress:
     logging.info("Creating Ingress %r...", ingress.name)
     try:
-        return ExtensionsV1beta1Api().create_namespaced_ingress(
+        return NetworkingV1beta1Api().create_namespaced_ingress(
             namespace=ingress.namespace, body=ingress.body
         )
     except ApiException as err:
@@ -168,7 +165,7 @@ def create_ingress(ingress: Manifest) -> V1beta1Ingress:
 def delete_ingress(name: str, namespace: str) -> Optional[V1Status]:
     logging.info("Deleting Ingress %r...", name)
     try:
-        ExtensionsV1beta1Api().delete_namespaced_ingress(
+        NetworkingV1beta1Api().delete_namespaced_ingress(
             name=name, namespace=namespace, body=DEFAULT_DELETE_OPTIONS
         )
     except ApiException as err:
@@ -178,7 +175,7 @@ def delete_ingress(name: str, namespace: str) -> Optional[V1Status]:
         logging.error("Failed to delete Ingress %r: %s", name, err.reason)
         raise
     await_no_resources_found(
-        ExtensionsV1beta1Api().list_namespaced_ingress, namespace=namespace
+        NetworkingV1beta1Api().list_namespaced_ingress, namespace=namespace
     )
 
 
