@@ -1,3 +1,4 @@
+from typing import List
 from unittest.mock import MagicMock, patch
 
 import pytest
@@ -20,6 +21,7 @@ from zelt.kubernetes.client import (
     delete_deployments,
     await_no_resources_found,
     rescale_deployment,
+    try_creating_custom_objects,
 )
 from zelt.kubernetes.manifest import Manifest
 
@@ -360,3 +362,104 @@ class TestDeleteIngress:
 
         delete.assert_called_once()
         waiting.assert_not_called()
+
+
+class TestCreateCustomResources:
+    @pytest.fixture()
+    def manifests(self) -> List[Manifest]:
+        manifest_a = Manifest(
+            body={
+                "apiVersion": "zalando.org/v1",
+                "kind": "MyCustomResource",
+                "metadata": {
+                    "name": "a_surprise",
+                    "namespace": "a_namespace",
+                    "labels": {"application": "an_application"},
+                },
+            }
+        )
+        manifest_b = Manifest(
+            body={
+                "apiVersion": "example.com/v2",
+                "kind": "NewCustomResource",
+                "metadata": {
+                    "name": "a_surprise",
+                    "namespace": "a_namespace",
+                    "labels": {"application": "an_application"},
+                },
+            }
+        )
+        return [manifest_a, manifest_b]
+
+    @pytest.fixture()
+    def crds(self) -> List[MagicMock]:
+        crd_manifest_a = MagicMock()
+        crd_manifest_a.spec.names.kind = "MyCustomResource"
+        crd_manifest_a.spec.names.plural = "mycustomresources"
+        crd_manifest_a.spec.scope = "Namespaced"
+
+        crd_manifest_b = MagicMock()
+        crd_manifest_b.spec.names.kind = "NewCustomResource"
+        crd_manifest_b.spec.names.plural = "newcustomresources"
+        crd_manifest_b.spec.scope = "Namespaced"
+
+        crd_cluster_manifest = MagicMock()
+        crd_cluster_manifest.spec.names.kind = "ClusterResource"
+        crd_cluster_manifest.spec.names.plural = "clusterresources"
+        crd_cluster_manifest.spec.scope = "Cluster"
+
+        return [crd_manifest_a, crd_manifest_b, crd_cluster_manifest]
+
+    @patch("kubernetes.config.load_kube_config")
+    @patch("zelt.kubernetes.client.CustomObjectsApi")
+    @patch(
+        "zelt.kubernetes.client.ApiextensionsV1beta1Api.list_custom_resource_definition"
+    )
+    def test_it_creates_supported_custom_resources(
+        self,
+        list_crds,
+        custom_objects_api,
+        config,
+        manifests: List[Manifest],
+        crds: List[MagicMock],
+    ):
+
+        list_crds.return_value = MagicMock(items=crds)
+
+        try_creating_custom_objects(manifests)
+
+        custom_objects_api().create_namespaced_custom_object.assert_any_call(
+            namespace=manifests[0].namespace,
+            body=manifests[0].body,
+            group="zalando.org",
+            version="v1",
+            plural="mycustomresources",
+        )
+        custom_objects_api().create_namespaced_custom_object.assert_any_call(
+            namespace=manifests[1].namespace,
+            body=manifests[1].body,
+            group="example.com",
+            version="v2",
+            plural="newcustomresources",
+        )
+
+    @patch("kubernetes.config.load_kube_config")
+    @patch("zelt.kubernetes.client.CustomObjectsApi")
+    @patch("zelt.kubernetes.client.ApiextensionsV1beta1Api")
+    def test_it_raises_exception(self, extensions_api, *_):
+        pass
+
+    def test_it_fetches_available_crds_once(self):
+        pass
+
+    def test_it_ignores_unsupported_resources(self):
+        pass
+
+    def test_it_ignores_non_namespaced_crds(self):
+        pass
+
+    def test_it_raises_exception_on_fetching_crds(self):
+        pass
+
+    def test_it_raises_exception_on_creating_resources(self):
+        pass

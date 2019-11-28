@@ -62,8 +62,8 @@ class Manifest(NamedTuple):
         try:
             return ResourceType(value.capitalize())
         except ValueError:
-            logging.warning(
-                "Unsupported resource type %r converted into %s.",
+            logging.debug(
+                "Non-standard resource type %r converted into %s.",
                 value,
                 ResourceType.OTHER,
             )

@@ -37,6 +37,7 @@ def manifest_set(tmp_path: Path) -> ManifestSet:
         ingress=Manifest.from_file(manifest_file),
         controller=Manifest.from_file(manifest_file),
         worker=Manifest.from_file(manifest_file),
+        others=[],
     )
 
 
@@ -55,6 +56,7 @@ def configmap_storage() -> ConfigmapStorage:
 
 class TestCreateResources:
     @patch("zelt.kubernetes.client.config")
+    @patch("zelt.kubernetes.client.try_creating_custom_objects")
     @patch("zelt.kubernetes.client.CoreV1Api.create_namespace")
     @patch("zelt.kubernetes.client.CoreV1Api.create_namespaced_service")
     @patch("zelt.kubernetes.client.CoreV1Api.create_namespaced_config_map")
@@ -69,6 +71,7 @@ class TestCreateResources:
         create_configmap,
         create_service,
         create_namespace,
+        create_custom_objects,
         config,
         configmap_storage: ConfigmapStorage,
         locustfile: Path,
@@ -81,7 +84,36 @@ class TestCreateResources:
         create_service.assert_called_once()
         create_configmap.assert_called_once()
         create_ingress.assert_called_once()
+        create_custom_objects.assert_not_called()
         assert create_deployment.call_count == 2
+
+    @patch("zelt.kubernetes.client.config")
+    @patch("zelt.kubernetes.client.try_creating_custom_objects")
+    @patch("zelt.kubernetes.client.CoreV1Api.create_namespace")
+    @patch("zelt.kubernetes.client.CoreV1Api.create_namespaced_service")
+    @patch("zelt.kubernetes.client.CoreV1Api.create_namespaced_config_map")
+    @patch("zelt.kubernetes.client.NetworkingV1beta1Api.create_namespaced_ingress")
+    @patch("zelt.kubernetes.client.AppsV1Api.create_namespaced_deployment")
+    @patch("zelt.kubernetes.client.wait_until_pod_ready")
+    def test_it_deploys_custom_manifests(
+        self,
+        wait,
+        create_deployment,
+        create_ingress,
+        create_configmap,
+        create_service,
+        create_namespace,
+        create_custom_objects,
+        config,
+        configmap_storage: ConfigmapStorage,
+        locustfile: Path,
+        manifest_set: ManifestSet,
+    ):
+        manifest_set = manifest_set._replace(others=[manifest_set.namespace] * 2)
+        deployer.create_resources(
+            ms=manifest_set, storage=configmap_storage, locustfile=locustfile
+        )
+        create_custom_objects.assert_called_once()
 
     @patch("zelt.kubernetes.client.config")
     @patch("zelt.kubernetes.client.CoreV1Api.create_namespace")
