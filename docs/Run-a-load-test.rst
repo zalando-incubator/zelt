@@ -92,6 +92,11 @@ These consist of:
 - ``service.yaml`` that defines the Kubernetes service_ to create
 - ``ingress.yaml`` that defines the Kubernetes ingress_ to create
 
+.. note::
+    Currently Zelt's support is limited to the above Kubernetes resource types, as well as `custom resources`_.
+    Please note that Zelt will deploy a custom resource only if its `custom resource definition`_ is already deployed in the cluster, and only if
+    the scope of the resource is limited to a namespace.
+
 .. TODO: Create a page detailing each manifest
 .. For more detailed information, please refer to :ref:`manifests`.
 
@@ -195,3 +200,5 @@ before doing this or they will be deleted!
 .. _`Download them`: https://github.com/zalando-incubator/zelt/tree/master/examples/manifests/combined
 .. _Transformer: https://github.com/zalando-incubator/Transformer
 .. _`Locust's documentation`: https://docs.locust.io/en/stable/what-is-locust.html
+.. _`custom resources`: https://kubernetes.io/docs/concepts/extend-kubernetes/api-extension/custom-resources/
+.. _`custom resource definition`: https://kubernetes.io/docs/tasks/access-kubernetes-api/custom-resources/custom-resource-definitions/
