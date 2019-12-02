@@ -24,6 +24,10 @@ def create_resources(
 
         kube.create_service(ms.service)
         kube.create_ingress(ms.ingress)
+
+        if ms.others:
+            kube.try_creating_custom_objects(ms.others)
+
     except (kube.ApiException, RetryError) as err:
         logging.error("Kubernetes operation failed: %s", err.reason)
 

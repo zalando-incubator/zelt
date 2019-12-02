@@ -15,9 +15,10 @@ class ManifestSet(NamedTuple):
     ingress: Manifest
     controller: Manifest
     worker: Optional[Manifest]
+    others: List[Manifest]
 
 
-# TOOD: Refactor.
+# TODO: Refactor.
 def from_directory(dir_path: PathLike) -> ManifestSet:
     categories: Dict[ResourceType, List[Manifest]] = defaultdict(list)
     for m in Manifest.all_from_directory(dir_path):
@@ -73,4 +74,5 @@ def from_directory(dir_path: PathLike) -> ManifestSet:
         ingress=categories[ResourceType.INGRESS][0],
         controller=controllers[0],
         worker=workers[0] if workers else None,
+        others=categories[ResourceType.OTHER],
     )

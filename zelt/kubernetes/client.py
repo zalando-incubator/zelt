@@ -14,6 +14,8 @@ from kubernetes.client import (
     V1ContainerStatus,
     NetworkingV1beta1Api,
     NetworkingV1beta1Ingress,
+    CustomObjectsApi,
+    ApiextensionsV1beta1Api,
 )
 from kubernetes.client.rest import ApiException
 from tenacity import retry, stop_after_delay, wait_fixed, retry_if_exception_type
@@ -177,6 +179,72 @@ def delete_ingress(name: str, namespace: str) -> Optional[V1Status]:
     await_no_resources_found(
         NetworkingV1beta1Api().list_namespaced_ingress, namespace=namespace
     )
+
+
+def try_creating_custom_objects(manifests: List[Manifest]):
+    logging.info("Fetching CRDs available in the cluster...")
+    try:
+        custom_resources = (
+            ApiextensionsV1beta1Api().list_custom_resource_definition().items
+        )
+    except ApiException as err:
+        logging.error("Failed to fetch CRDs: %s", err.reason)
+        raise
+
+    available_kinds = {r.spec.names.kind.lower() for r in custom_resources}
+
+    for m in manifests:
+        logging.info("Found a custom manifest: %s %r", m.body["kind"], m.name)
+        if m.body["kind"].lower() not in available_kinds:
+            logging.error(
+                "Unsupported custom manifest %r of kind %r is ignored. "
+                "Supported custom resource types are: %s",
+                m.name,
+                m.body["kind"],
+                available_kinds,
+            )
+            continue
+
+        # By supporting only namespaced resources we don't have to manage
+        # the cleanup - it will be handled by the deletion of the namespace.
+        matching_resources = [
+            r
+            for r in custom_resources
+            if r.spec.names.kind.lower() == m.body["kind"].lower()
+            and r.spec.scope.lower() == "namespaced"
+        ]
+        if not matching_resources:
+            logging.error(
+                "Failed to match %r to a namespaced custom resource "
+                "definition. Non-namespaced resources are not supported!",
+                m.body["kind"],
+            )
+            continue
+
+        _create_custom_object_with_plural(
+            custom_object=m, plural=matching_resources[0].spec.names.plural
+        )
+
+
+def _create_custom_object_with_plural(custom_object: Manifest, plural: str):
+    logging.info("Creating %s %r ", custom_object.body["kind"], custom_object.name)
+    try:
+        group, version = custom_object.body.get("apiVersion").rsplit("/", 1)
+        return CustomObjectsApi().create_namespaced_custom_object(
+            namespace=custom_object.namespace,
+            body=custom_object.body,
+            group=group,
+            version=version,
+            plural=plural,
+        )
+    except ApiException as err:
+        logging.error(
+            "Failed to create %s %r: %s",
+            custom_object.body["kind"],
+            custom_object.name,
+            err.reason,
+        )
+        raise
 
 
 @retry(
