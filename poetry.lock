@@ -1026,7 +1026,7 @@ testing = ["coverage (>=5.0.3)", "zope.event", "zope.testing"]
 docs = ["sphinx", "sphinx-autodoc-typehints", "sphinx-issues"]
 
 [metadata]
-content-hash = "a635848ca6715c1c63d53e6156c713a95d937abcf9f57a20d0b07d4a4412b56e"
+content-hash = "7e921c1cbb6fe061d55427f26685c0e25046d13acd89bee2d0f53faf4078056b"
 python-versions = "^3.6"
 
 [metadata.files]
