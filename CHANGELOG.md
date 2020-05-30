@@ -5,6 +5,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.2.15][] - 2020-05-29
+
+### Fixed
+
+  - Specifically excluded `10.1.0` from acceptable versions of our `kubernetes`
+    dependency (#25)
+
 ## [1.2.14][] - 2019-11-29
 
 ### Added
@@ -113,6 +120,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Implemented `-v`/`--version` option to show Zelt version.
   - This changelog.
 
+[1.2.15]: https://github.com/zalando-incubator/zelt/compare/v1.2.14...v1.2.15
 [1.2.14]: https://github.com/zalando-incubator/zelt/compare/v1.2.13...v1.2.14
 [1.2.13]: https://github.com/zalando-incubator/zelt/compare/v1.2.12...v1.2.13
 [1.2.12]: https://github.com/zalando-incubator/zelt/compare/v1.2.11...v1.2.12
